@@ -15,6 +15,10 @@
 		3275A8951BEEA2DC00E0373E /* tabletopHelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275A8941BEEA2DC00E0373E /* tabletopHelperUITests.swift */; };
 		3275A8A61BEED53A00E0373E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3275A8A41BEED53A00E0373E /* Main.storyboard */; };
 		3275A8AA1BEED7CB00E0373E /* DiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275A8A91BEED7CB00E0373E /* DiceViewController.swift */; };
+		32B738A01BFD0446004B50F0 /* CounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B7389F1BFD0446004B50F0 /* CounterViewController.swift */; };
+		32E0F8A91BF3F0F6009CCE46 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0F8A81BF3F0F6009CCE46 /* MyPageViewController.swift */; };
+		32E0F8AB1BF3F2ED009CCE46 /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0F8AA1BF3F2ED009CCE46 /* PageContentViewController.swift */; };
+		32E0F8AD1BF3FC14009CCE46 /* brick.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E0F8AC1BF3FC14009CCE46 /* brick.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		3275A8961BEEA2DC00E0373E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3275A8A51BEED53A00E0373E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3275A8A91BEED7CB00E0373E /* DiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceViewController.swift; sourceTree = "<group>"; };
+		32B7389F1BFD0446004B50F0 /* CounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterViewController.swift; sourceTree = "<group>"; };
+		32E0F8A81BF3F0F6009CCE46 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		32E0F8AA1BF3F2ED009CCE46 /* PageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
+		32E0F8AC1BF3FC14009CCE46 /* brick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brick.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +110,10 @@
 				3275A8741BEEA2DC00E0373E /* AppDelegate.swift */,
 				3275A8761BEEA2DC00E0373E /* ViewController.swift */,
 				3275A8A41BEED53A00E0373E /* Main.storyboard */,
+				32B7389F1BFD0446004B50F0 /* CounterViewController.swift */,
+				32E0F8AC1BF3FC14009CCE46 /* brick.png */,
+				32E0F8A81BF3F0F6009CCE46 /* MyPageViewController.swift */,
+				32E0F8AA1BF3F2ED009CCE46 /* PageContentViewController.swift */,
 				3275A87B1BEEA2DC00E0373E /* Assets.xcassets */,
 				3275A87D1BEEA2DC00E0373E /* LaunchScreen.storyboard */,
 				3275A8801BEEA2DC00E0373E /* Info.plist */,
@@ -235,6 +247,7 @@
 				3275A8A61BEED53A00E0373E /* Main.storyboard in Resources */,
 				3275A87F1BEEA2DC00E0373E /* LaunchScreen.storyboard in Resources */,
 				3275A87C1BEEA2DC00E0373E /* Assets.xcassets in Resources */,
+				32E0F8AD1BF3FC14009CCE46 /* brick.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +274,10 @@
 			files = (
 				3275A8771BEEA2DC00E0373E /* ViewController.swift in Sources */,
 				3275A8AA1BEED7CB00E0373E /* DiceViewController.swift in Sources */,
+				32E0F8AB1BF3F2ED009CCE46 /* PageContentViewController.swift in Sources */,
+				32B738A01BFD0446004B50F0 /* CounterViewController.swift in Sources */,
 				3275A8751BEEA2DC00E0373E /* AppDelegate.swift in Sources */,
+				32E0F8A91BF3F0F6009CCE46 /* MyPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +504,7 @@
 				3275A89B1BEEA2DC00E0373E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3275A89C1BEEA2DC00E0373E /* Build configuration list for PBXNativeTarget "tabletopHelperTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +513,7 @@
 				3275A89E1BEEA2DC00E0373E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3275A89F1BEEA2DC00E0373E /* Build configuration list for PBXNativeTarget "tabletopHelperUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +522,7 @@
 				3275A8A11BEEA2DC00E0373E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
