@@ -12,6 +12,9 @@ import UIKit
 class DiceViewController: UIViewController {
 
     
+    @IBOutlet weak var rollText: UILabel!
+    @IBOutlet weak var concatRollText: UILabel!
+    @IBOutlet weak var totalRollText: UILabel!
     //Maybe globals************************
     private var random1: Int?
     let alertController: UIAlertController = UIAlertController(title: "Coin Results", message: "The coin flipped a", preferredStyle: .Alert)
@@ -24,6 +27,8 @@ class DiceViewController: UIViewController {
         super.viewDidLoad()
         random1 = Int(arc4random())
         alertController.addAction(okAction)
+        rollText.text = ""
+        totalRollText.text = ""
         //print("Random Number: \(rand()%10)")
         // Do any additional setup after loading the view.
     }
@@ -74,35 +79,54 @@ class DiceViewController: UIViewController {
     }
     @IBAction func d4Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%4+1)// this is the dice roll
+        //print(random1)
+        let roll = random1!%4+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
     @IBAction func d6Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%6+1) // this is the dice roll
+        //print(random1)
+        let roll = random1!%6+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
     @IBAction func d8Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%8+1) // this is the dice roll
+        //print(random1)
+        let roll = random1!%8+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
     @IBAction func d10Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%10+1) // this is the dice roll
+        //print(random1)
+        let roll = random1!%10+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
     @IBAction func d12Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%12+1) //this is the dice roll
+        //print(random1)
+        let roll = random1!%12+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
 
     }
     @IBAction func d20Down(sender: AnyObject) {
         random1 = Int(arc4random())
-        print(random1)
-        print(random1!%20+1)//this is the dice roll
+        //print(random1)
+        let roll = random1!%20+1
+        print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
+    
     @IBAction func dAnyDown(sender: AnyObject) {
         random1 = Int(arc4random())
         print(random1)
@@ -124,6 +148,9 @@ class DiceViewController: UIViewController {
             dieSize = Int(textf.text!)
             randNum = self.random1!%dieSize + 1 // this is the dice roll
             print(randNum)
+            //print(random1)
+            self.rollText.text = "\(randNum)"
+            self.addToConcatText("\(randNum)")
         }
         actionSheetController.addAction(okAction)
         //Add a text field
@@ -136,22 +163,34 @@ class DiceViewController: UIViewController {
         //Present the AlertController
         self.presentViewController(actionSheetController, animated: true, completion: nil)
         
+
+    }
+    @IBAction func clearDown(sender: AnyObject) {
+        totalRollText.text = ""
+        rollText.text = ""
+        concatRollText.text = ""
         
-        alertController.message = "Your die rolled \(randNum)"
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     //button actions done**********************************
     
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func addToConcatText(tString:String){
+        if(concatRollText.text == ""){
+            concatRollText.text = tString
+            totalRollText.text = tString
+        }else{
+            var concatText: String
+            var currentRoll: Int
+            concatText = concatRollText.text!
+            concatText += " + \(tString)"
+            concatRollText.text = concatText
+            
+            currentRoll = Int(totalRollText.text!)!
+            currentRoll += Int(tString)!
+            totalRollText.text = "\(currentRoll)"
+        }
+        
+        
     }
-    */
 
 }
