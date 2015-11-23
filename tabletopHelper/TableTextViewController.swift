@@ -30,14 +30,18 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
 
+    //define number of sections
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
+    //define amount of rows here
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSourceArray.count
     }
     
+    
+    //define cell properties here
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("BasicCell")! as! MyTableViewCell
@@ -53,23 +57,36 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
+    //add a cell to the table view
     @IBAction func tableEntriesUp(sender: AnyObject) {
+        //first add item to array
         entryCounter++
         newString = "item" + "\(entryCounter)"
-
         dataSourceArray.append(newString)
-        
+        //insert row
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: dataSourceArray.count-1, inSection: 0)], withRowAnimation: .Automatic)
         tableView.endUpdates()
     }
     
-//    @IBAction func emptyfunc(){
-//        print("this is fucked")
-//        //let indexPath = self.tableView.indexPathForSelectedRow!
-//        //self.cell.numButton.setTitle("lolnah", forState: UIControlState.Normal)
-//        
-//    }
+    //swipe to show delete
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    //delete row implementation
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            dataSourceArray.removeAtIndex(indexPath.row)
+            entryCounter--
+            //delete row
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
+    }
+    //end of swipe to delete
+    
     /*
     // MARK: - Navigation
 

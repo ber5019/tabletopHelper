@@ -163,7 +163,6 @@
         <!--Dice View Controller-->
         <scene sceneID="bzP-3e-peM">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RGD-jB-62p" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="6Qe-uY-feH" customClass="DiceViewController" customModule="tabletopHelper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Ib-tO-qFT"/>
@@ -542,6 +541,7 @@
                         <outlet property="totalRollText" destination="hCZ-IN-1Mw" id="VkE-8K-EeN"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RGD-jB-62p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1064" y="448"/>
         </scene>
