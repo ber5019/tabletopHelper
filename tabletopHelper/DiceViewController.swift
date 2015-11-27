@@ -12,6 +12,7 @@ import UIKit
 class DiceViewController: UIViewController {
 
     
+    @IBOutlet weak var diceSubView: UIView!
     @IBOutlet weak var rollText: UILabel!
     @IBOutlet weak var concatRollText: UILabel!
     @IBOutlet weak var totalRollText: UILabel!
@@ -25,7 +26,6 @@ class DiceViewController: UIViewController {
     //on load functions*********************
     override func viewDidLoad() {
         super.viewDidLoad()
-        random1 = Int(arc4random())
         alertController.addAction(okAction)
         rollText.text = ""
         totalRollText.text = ""
@@ -60,13 +60,13 @@ class DiceViewController: UIViewController {
     
     //button actions*********************************
     @IBAction func coinDown(sender: AnyObject) {
-        random1 = Int(arc4random())
-        print(random1)
+        random1 = Int(arc4random_uniform(2))
+        //print(random1)
 
         //generate alert***********************************************************
         //Create the AlertController
         
-        if((random1!%2) == 1){
+        if((random1) == 1){
             alertController.message = "The coin flipped a heads"
             
         }else{
@@ -78,58 +78,27 @@ class DiceViewController: UIViewController {
         //alert generated ***************************************************************
     }
     @IBAction func d4Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%4+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(4)
     }
     @IBAction func d6Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%6+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(6)
     }
     @IBAction func d8Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%8+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(8)
     }
     @IBAction func d10Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%10+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(10)
     }
     @IBAction func d12Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%12+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(12)
 
     }
     @IBAction func d20Down(sender: AnyObject) {
-        random1 = Int(arc4random())
-        //print(random1)
-        let roll = random1!%20+1
-        print(roll)// this is the dice roll
-        rollText.text = "\(roll)"
-        addToConcatText("\(roll)")
+        generateRoll(20)
     }
     
-    @IBAction func dAnyDown(sender: AnyObject) {
-        random1 = Int(arc4random())
-        print(random1)
+    @IBAction func dAnyDown(sender: AnyObject) {                
+        //print(random1)
         var dieSize:Int!
         var randNum:Int!
         //Create the AlertController
@@ -144,10 +113,11 @@ class DiceViewController: UIViewController {
         let okAction: UIAlertAction = UIAlertAction(title: "Okay", style: .Default) { action -> Void in
             //Do some other stuff
             let textf = actionSheetController.textFields![0] as UITextField
-            print(textf.text)
+            //print(textf.text)
             dieSize = Int(textf.text!)
-            randNum = self.random1!%dieSize + 1 // this is the dice roll
-            print(randNum)
+            self.random1 = Int(arc4random_uniform(UInt32(dieSize)))
+            randNum = self.random1! + 1 // this is the dice roll
+            //print(randNum)
             //print(random1)
             self.rollText.text = "\(randNum)"
             self.addToConcatText("\(randNum)")
@@ -189,8 +159,15 @@ class DiceViewController: UIViewController {
             currentRoll += Int(tString)!
             totalRollText.text = "\(currentRoll)"
         }
-        
-        
+    }
+    
+    func generateRoll(dSize:UInt32){
+        let random1 = Int(arc4random_uniform(dSize))
+        //print(random1)
+        let roll = random1+1
+        //print(roll)// this is the dice roll
+        rollText.text = "\(roll)"
+        addToConcatText("\(roll)")
     }
 
 }

@@ -10,61 +10,81 @@ import UIKit
 
 class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-    @IBOutlet weak var lableLabel: UILabel!
-    @IBOutlet weak var labelChanger: UIButton!
+    @IBOutlet weak var charAvatar: UIImageView!
+    @IBOutlet weak var avatarButton: UIButton!
+    @IBOutlet weak var statsButton: UIButton!
+    @IBOutlet weak var inventoryButton: UIButton!
+    @IBOutlet weak var inventorySeperator: UIView!
+    @IBOutlet weak var spellsButton: UIButton!
+    @IBOutlet weak var spellsSeperator: UIView!
+    @IBOutlet weak var skillButton: UIButton!
+    @IBOutlet weak var statsView: UIView!
+    @IBOutlet weak var statsSeperator: UIView!
+    @IBOutlet weak var skillSeperator: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //self.view.backgroundColor = UIColor(red: 243, green: 229, blue: 245, alpha: 1.0)
+        
+        charAvatar.layer.cornerRadius = charAvatar.frame.size.width/2
+        charAvatar.clipsToBounds = true
+        charAvatar.layer.borderWidth = 3.0
+        charAvatar.layer.borderColor = UIColor.init(red: 186/255, green: 104/255, blue: 200/255, alpha: 1.0).CGColor
+        avatarButton.layer.cornerRadius = avatarButton.frame.size.width/2
+        avatarButton.clipsToBounds = true
+        
+        statsSeperator.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //camera app stuff
 
-    @IBAction func labelChangerDown(sender: AnyObject) {
-        lableLabel.text = "was changed"
+    @IBAction func getImageDown(sender: AnyObject) {
+        let imageFromSource = UIImagePickerController()
+        imageFromSource.delegate = self
+        imageFromSource.allowsEditing = false
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            imageFromSource.sourceType = UIImagePickerControllerSourceType.Camera
+        }else{
+            imageFromSource.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        }
+        
+        self.presentViewController(imageFromSource, animated: true, completion: nil)
     }
     
-//    //camera app stuff
-//    @IBAction func pictureButtonDown(sender: AnyObject) {
-//        
-//        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-//            var picker = UIImagePickerController()
-//            picker.delegate = self
-//            picker.sourceType = UIImagePickerControllerSourceType.Camera
-//            picker.mediaTypes = [kUTTypeImage]
-//            picker.allowsEditing = true
-//            self.presentViewController(picker, animated: true, completion: nil)
-//        }
-//        else{
-//            NSLog("No Camera.")
-//        }
-//    }
-//    
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary!) {
-//        NSLog("Received image from camera")
-//        let mediaType = info[UIImagePickerControllerMediaType] as! String
-//        var originalImage:UIImage?, editedImage:UIImage?, imageToSave:UIImage?
-//        let compResult:CFComparisonResult = CFStringCompare(mediaType as NSString!, kUTTypeImage, CFStringCompareFlags.CompareCaseInsensitive)
-//        if ( compResult == CFComparisonResult.CompareEqualTo ) {
-//            
-//            editedImage = info[UIImagePickerControllerEditedImage] as! UIImage?
-//            originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage?
-//            
-//            if ( editedImage != nil ) {
-//                imageToSave = editedImage
-//            } else {
-//                imageToSave = originalImage
-//            }
-//            imgView.image = imageToSave
-//            imgView.reloadInputViews()
-//        }
-//        picker.dismissViewControllerAnimated(true, completion: nil)
-//    }
-//
-//    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-//        picker.dismissViewControllerAnimated(true, completion: nil)
-//    }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let temp : UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        charAvatar.image = temp
+        self.dismissViewControllerAnimated(true, completion: {})
+    } //camera stuff done!
+    
+    @IBAction func statsButtonDown(sender: AnyObject) {
+        statsSeperator.hidden = true
+        inventorySeperator.hidden = false
+        spellsSeperator.hidden = false
+        skillSeperator.hidden = false
+    }
+    @IBAction func inventoryButtonDown(sender: AnyObject) {
+        statsSeperator.hidden = false
+        inventorySeperator.hidden = true
+        spellsSeperator.hidden = false
+        skillSeperator.hidden = false
+    }
+    @IBAction func spellsButtonDown(sender: AnyObject) {        statsSeperator.hidden = false
+        inventorySeperator.hidden = false
+        spellsSeperator.hidden = true
+        skillSeperator.hidden = false
+    }
+    @IBAction func skillsButtonDown(sender: AnyObject) {
+        statsSeperator.hidden = false
+        inventorySeperator.hidden = false
+        spellsSeperator.hidden = false
+        skillSeperator.hidden = true
+    }
 }

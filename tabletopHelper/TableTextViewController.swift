@@ -22,6 +22,7 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.backgroundColor = UIColor.clearColor()
+        tableView.allowsSelection = false;
     }
 
     override func didReceiveMemoryWarning() {
