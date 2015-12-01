@@ -14,12 +14,20 @@
 		3275A88A1BEEA2DC00E0373E /* tabletopHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275A8891BEEA2DC00E0373E /* tabletopHelperTests.swift */; };
 		3275A8951BEEA2DC00E0373E /* tabletopHelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275A8941BEEA2DC00E0373E /* tabletopHelperUITests.swift */; };
 		3275A8AA1BEED7CB00E0373E /* DiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275A8A91BEED7CB00E0373E /* DiceViewController.swift */; };
+		328032481C0BDC3B00FA51EF /* StatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328032471C0BDC3B00FA51EF /* StatTableViewCell.swift */; };
+		329A84591C0BE42D007FD7E6 /* statTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329A84581C0BE42D007FD7E6 /* statTableVC.swift */; };
 		32B738A21C001D8C004B50F0 /* TableTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B738A11C001D8C004B50F0 /* TableTextViewController.swift */; };
 		32B738A41C002763004B50F0 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B738A31C002763004B50F0 /* MyTableViewCell.swift */; };
 		32B73F1E1C0032A1004B50F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32B73F1C1C0032A1004B50F0 /* Main.storyboard */; };
 		32E0F8A91BF3F0F6009CCE46 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0F8A81BF3F0F6009CCE46 /* MyPageViewController.swift */; };
 		32E0F8AB1BF3F2ED009CCE46 /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0F8AA1BF3F2ED009CCE46 /* PageContentViewController.swift */; };
 		32E0F8AD1BF3FC14009CCE46 /* brick.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E0F8AC1BF3FC14009CCE46 /* brick.png */; };
+		32EC74E31C0D702300053453 /* InventoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74E21C0D702300053453 /* InventoryVC.swift */; };
+		32EC74E51C0D71DD00053453 /* InventoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74E41C0D71DD00053453 /* InventoryCell.swift */; };
+		32EC74E71C0D773900053453 /* spellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74E61C0D773900053453 /* spellVC.swift */; };
+		32EC74E91C0D774C00053453 /* spellCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74E81C0D774C00053453 /* spellCell.swift */; };
+		32EC74EB1C0D7A6600053453 /* skillVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74EA1C0D7A6600053453 /* skillVC.swift */; };
+		32EC74ED1C0D7A7700053453 /* skillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC74EC1C0D7A7700053453 /* skillCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,12 +61,20 @@
 		3275A8941BEEA2DC00E0373E /* tabletopHelperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabletopHelperUITests.swift; sourceTree = "<group>"; };
 		3275A8961BEEA2DC00E0373E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3275A8A91BEED7CB00E0373E /* DiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceViewController.swift; sourceTree = "<group>"; };
+		328032471C0BDC3B00FA51EF /* StatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatTableViewCell.swift; sourceTree = "<group>"; };
+		329A84581C0BE42D007FD7E6 /* statTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = statTableVC.swift; sourceTree = "<group>"; };
 		32B738A11C001D8C004B50F0 /* TableTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableTextViewController.swift; sourceTree = "<group>"; };
 		32B738A31C002763004B50F0 /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		32B73F1D1C0032A1004B50F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		32E0F8A81BF3F0F6009CCE46 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		32E0F8AA1BF3F2ED009CCE46 /* PageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
 		32E0F8AC1BF3FC14009CCE46 /* brick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brick.png; sourceTree = "<group>"; };
+		32EC74E21C0D702300053453 /* InventoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryVC.swift; sourceTree = "<group>"; };
+		32EC74E41C0D71DD00053453 /* InventoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryCell.swift; sourceTree = "<group>"; };
+		32EC74E61C0D773900053453 /* spellVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = spellVC.swift; sourceTree = "<group>"; };
+		32EC74E81C0D774C00053453 /* spellCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = spellCell.swift; sourceTree = "<group>"; };
+		32EC74EA1C0D7A6600053453 /* skillVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skillVC.swift; sourceTree = "<group>"; };
+		32EC74EC1C0D7A7700053453 /* skillCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skillCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +128,14 @@
 				3275A8741BEEA2DC00E0373E /* AppDelegate.swift */,
 				3275A8761BEEA2DC00E0373E /* ViewController.swift */,
 				32B73F1C1C0032A1004B50F0 /* Main.storyboard */,
+				32EC74EA1C0D7A6600053453 /* skillVC.swift */,
+				32EC74EC1C0D7A7700053453 /* skillCell.swift */,
+				32EC74E61C0D773900053453 /* spellVC.swift */,
+				32EC74E81C0D774C00053453 /* spellCell.swift */,
+				32EC74E41C0D71DD00053453 /* InventoryCell.swift */,
+				32EC74E21C0D702300053453 /* InventoryVC.swift */,
+				329A84581C0BE42D007FD7E6 /* statTableVC.swift */,
+				328032471C0BDC3B00FA51EF /* StatTableViewCell.swift */,
 				32B738A31C002763004B50F0 /* MyTableViewCell.swift */,
 				32B738A11C001D8C004B50F0 /* TableTextViewController.swift */,
 				32E0F8AC1BF3FC14009CCE46 /* brick.png */,
@@ -211,6 +235,7 @@
 				TargetAttributes = {
 					3275A8701BEEA2DC00E0373E = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = AX5R2A6XY5;
 					};
 					3275A8841BEEA2DC00E0373E = {
 						CreatedOnToolsVersion = 7.1;
@@ -275,9 +300,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32EC74EB1C0D7A6600053453 /* skillVC.swift in Sources */,
 				3275A8771BEEA2DC00E0373E /* ViewController.swift in Sources */,
+				32EC74E71C0D773900053453 /* spellVC.swift in Sources */,
+				328032481C0BDC3B00FA51EF /* StatTableViewCell.swift in Sources */,
 				32B738A41C002763004B50F0 /* MyTableViewCell.swift in Sources */,
+				32EC74E91C0D774C00053453 /* spellCell.swift in Sources */,
+				32EC74E31C0D702300053453 /* InventoryVC.swift in Sources */,
+				329A84591C0BE42D007FD7E6 /* statTableVC.swift in Sources */,
+				32EC74ED1C0D7A7700053453 /* skillCell.swift in Sources */,
 				3275A8AA1BEED7CB00E0373E /* DiceViewController.swift in Sources */,
+				32EC74E51C0D71DD00053453 /* InventoryCell.swift in Sources */,
 				32B738A21C001D8C004B50F0 /* TableTextViewController.swift in Sources */,
 				32E0F8AB1BF3F2ED009CCE46 /* PageContentViewController.swift in Sources */,
 				3275A8751BEEA2DC00E0373E /* AppDelegate.swift in Sources */,
@@ -421,10 +454,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = tabletopHelper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bruceRandall.tabletopHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -433,10 +469,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = tabletopHelper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bruceRandall.tabletopHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
