@@ -32,6 +32,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var spellContainer: UIView!
     @IBOutlet weak var skillContainer: UIView!
     
+    //images for subtabs
+    @IBOutlet weak var statsTabImage: UIImageView!
+    @IBOutlet weak var inventoryTabImage: UIImageView!
+    @IBOutlet weak var spellsTabImage: UIImageView!
+    @IBOutlet weak var skillsTabImage: UIImageView!
+    
+    
 
     
     override func viewDidLoad() {
@@ -46,8 +53,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         charAvatar.layer.borderColor = UIColor.init(red: 186/255, green: 104/255, blue: 200/255, alpha: 1.0).CGColor
         avatarButton.layer.cornerRadius = avatarButton.frame.size.width/2
         avatarButton.clipsToBounds = true
-        
         statsSeperator.hidden = true
+        changeIconImages("stats")
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,6 +131,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         inventoryContainer.hidden = true
         spellContainer.hidden = true
         skillContainer.hidden = true
+        changeIconImages("stats")
     }
     @IBAction func inventoryButtonDown(sender: AnyObject) {
         statsSeperator.hidden = false
@@ -134,6 +142,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         inventoryContainer.hidden = false
         spellContainer.hidden = true
         skillContainer.hidden = true
+        changeIconImages("inventory")
     }
     @IBAction func spellsButtonDown(sender: AnyObject) {
         statsSeperator.hidden = false
@@ -144,6 +153,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         inventoryContainer.hidden = true
         spellContainer.hidden = false
         skillContainer.hidden = true
+        changeIconImages("spells")
     }
     @IBAction func skillsButtonDown(sender: AnyObject) {
         statsSeperator.hidden = false
@@ -154,6 +164,26 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         inventoryContainer.hidden = true
         spellContainer.hidden = true
         skillContainer.hidden = false
+        changeIconImages("skills")
+    }
+    
+    func changeIconImages(tabName:String){
+        statsTabImage.image = UIImage(named: "stats grey")
+        inventoryTabImage.image = UIImage(named: "Inventory grey")
+        spellsTabImage.image = UIImage(named: "Spellbook grey")
+        skillsTabImage.image = UIImage(named: "skills grey")
+        switch tabName {
+            case "stats":
+                statsTabImage.image = UIImage(named: "character stats")
+            case "inventory":
+                inventoryTabImage.image = UIImage(named: "Inventory")
+            case "spells":
+                spellsTabImage.image = UIImage(named: "Spellbook")
+            case "skills":
+                skillsTabImage.image = UIImage(named: "skills")
+            default:
+                "baz"
+        }
     }
 //helper functions
     

@@ -777,6 +777,7 @@
                         <outlet property="inventoryButton" destination="rK9-Xi-liY" id="ugc-uL-V3Q"/>
                         <outlet property="inventoryContainer" destination="kwt-rb-OtQ" id="pvD-p1-4oL"/>
                         <outlet property="inventorySeperator" destination="8Oo-nP-AY5" id="JBD-Jc-6mP"/>
+                        <outlet property="inventoryTabImage" destination="j2N-8s-DcF" id="Q12-Sn-fiO"/>
                         <outlet property="levelTextField" destination="3C1-pZ-4TM" id="uH8-TK-Nf5"/>
                         <outlet property="levelloadtext" destination="VOt-iR-okU" id="XT7-hP-Mq9"/>
                         <outlet property="nameLabel" destination="eTa-7h-bgQ" id="Rby-ZF-bOW"/>
@@ -784,12 +785,15 @@
                         <outlet property="skillButton" destination="tON-uw-y2N" id="5oV-ve-cWp"/>
                         <outlet property="skillContainer" destination="J0A-MP-a6l" id="Mm7-kC-qFN"/>
                         <outlet property="skillSeperator" destination="qjp-XL-JaB" id="cGW-6I-ZTH"/>
+                        <outlet property="skillsTabImage" destination="9CA-BA-qr3" id="Jlh-jX-Gcz"/>
                         <outlet property="spellContainer" destination="cuh-3t-IHU" id="0OO-S6-apP"/>
                         <outlet property="spellsButton" destination="n3c-hQ-bGj" id="bGd-sn-qYN"/>
                         <outlet property="spellsSeperator" destination="uSh-OQ-ePd" id="cXy-Dv-4Sh"/>
+                        <outlet property="spellsTabImage" destination="b7h-3C-gEa" id="LpG-ou-7uw"/>
                         <outlet property="statContainer" destination="AGD-tl-dY9" id="HfH-79-2oZ"/>
                         <outlet property="statsButton" destination="qPP-3K-nPA" id="LV8-od-3yH"/>
                         <outlet property="statsSeperator" destination="zHx-2U-Ueb" id="lJ5-Kr-kWs"/>
+                        <outlet property="statsTabImage" destination="kZZ-gk-fxk" id="GMH-ax-sDo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1103,7 +1107,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Total:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbi-CN-gwb">
-                                        <rect key="frame" x="403" y="10" width="87" height="21"/>
+                                        <rect key="frame" x="8" y="10" width="87" height="21"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="NC8-i3-EU5"/>
@@ -1114,7 +1118,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCZ-IN-1Mw">
-                                        <rect key="frame" x="505" y="10" width="47" height="21"/>
+                                        <rect key="frame" x="110" y="10" width="47" height="21"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="47" id="3wk-Al-r5a"/>
@@ -1204,7 +1208,6 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.80784313730000001" green="0.57647058819999997" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="hCZ-IN-1Mw" secondAttribute="trailing" constant="8" id="13r-i7-FqF"/>
                                     <constraint firstItem="t0M-yu-0lF" firstAttribute="top" secondItem="PBA-cD-gen" secondAttribute="top" constant="20" id="439-qz-sxQ"/>
                                     <constraint firstAttribute="bottom" secondItem="lmf-kl-K7n" secondAttribute="bottom" constant="151" id="4ce-3i-gVh"/>
                                     <constraint firstItem="Iwh-AF-Con" firstAttribute="top" secondItem="8Rf-21-3we" secondAttribute="bottom" constant="24" id="5Q3-Ul-kAS"/>
@@ -1257,6 +1260,7 @@
                                     <constraint firstItem="f1m-rh-hOk" firstAttribute="top" secondItem="Iwh-AF-Con" secondAttribute="bottom" constant="88" id="vfh-81-0Jv"/>
                                     <constraint firstAttribute="bottom" secondItem="QLz-YA-S4M" secondAttribute="bottom" constant="20" id="wqO-7A-hnA"/>
                                     <constraint firstAttribute="bottom" secondItem="qX1-6A-H2X" secondAttribute="bottom" constant="20" id="xXw-hV-QF6"/>
+                                    <constraint firstItem="Hbi-CN-gwb" firstAttribute="leading" secondItem="PBA-cD-gen" secondAttribute="leading" constant="8" id="xgU-7f-nIM"/>
                                     <constraint firstItem="QLz-YA-S4M" firstAttribute="baseline" secondItem="qX1-6A-H2X" secondAttribute="baseline" id="yAw-xN-TAp"/>
                                     <constraint firstItem="GhR-dO-J7p" firstAttribute="centerY" secondItem="PBA-cD-gen" secondAttribute="centerY" id="yXf-DR-UMt"/>
                                     <constraint firstAttribute="trailing" secondItem="qX1-6A-H2X" secondAttribute="trailing" constant="10" id="zU6-ZE-b0j"/>
@@ -1949,6 +1953,10 @@
         <scene sceneID="bW8-BD-5ct">
             <objects>
                 <viewController id="HZS-k4-CnD" customClass="InventoryVC" customModule="tabletopHelper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jx1-WI-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="a2d-Oq-ZYE"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fBQ-JD-JP1">
                         <rect key="frame" x="0.0" y="0.0" width="560" height="224"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2095,6 +2103,10 @@
         <scene sceneID="d8o-ij-Pvr">
             <objects>
                 <viewController id="rmX-gw-jMw" customClass="spellVC" customModule="tabletopHelper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dKT-YS-jLI"/>
+                        <viewControllerLayoutGuide type="bottom" id="tBB-5G-tIU"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KFt-9J-BtN">
                         <rect key="frame" x="0.0" y="0.0" width="560" height="224"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2235,6 +2247,10 @@
         <scene sceneID="6fh-5H-oKD">
             <objects>
                 <viewController id="FRn-yk-11G" customClass="skillVC" customModule="tabletopHelper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Z6-XX-Oho"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rqh-JC-tgN"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nGm-FL-1Q3">
                         <rect key="frame" x="0.0" y="0.0" width="560" height="224"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2397,8 +2413,8 @@
         <image name="skills" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="l25-fh-v9v"/>
         <segue reference="Jfn-he-ijD"/>
         <segue reference="tZX-5t-bau"/>
+        <segue reference="l25-fh-v9v"/>
     </inferredMetricsTieBreakers>
 </document>
