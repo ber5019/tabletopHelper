@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var newString = "item"
-    var entryCounter = 1
+
     @IBOutlet weak var tableView: UITableView!
-    var dataSourceArray = ["item 1"]
+    var dataSourceArray = [NSManagedObject]()
     @IBOutlet weak var addList: UIButton!
     
     
@@ -23,8 +23,27 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false;
         self.view.backgroundColor = UIColor.clearColor()
-        
         resignFirstResponder()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //1
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "StatAttributes")
+        
+        //3
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            dataSourceArray = results as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,6 +59,9 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     //define amount of rows here
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(dataSourceArray.count == 0){
+            addCell("Stat Name")
+        }
         return dataSourceArray.count
     }
     
@@ -55,8 +77,12 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             
             cell.backgroundColor = UIColor.init(red: 186/255, green: 104/255, blue: 200/255, alpha: 1.0)
         }
+        let cellData = dataSourceArray[indexPath.row]
+        cell.namebutton.tag = indexPath.row
+        cell.namebutton.setTitle(cellData.valueForKey("statName") as? String, forState: UIControlState.Normal)
         cell.namebutton.addTarget(self, action: "changeName:", forControlEvents: .TouchUpInside)
-        
+        cell.numButton.tag = indexPath.row
+        cell.numButton.setTitle(cellData.valueForKey("statValue") as? String, forState: UIControlState.Normal)
         cell.numButton.addTarget(self, action: "changeValue:", forControlEvents: .TouchUpInside)
         return cell
     }
@@ -64,9 +90,7 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     //add a cell to the table view
     @IBAction func tableEntriesUp(sender: AnyObject) {
         //first add item to array
-        entryCounter++
-        newString = "item" + "\(entryCounter)"
-        dataSourceArray.append(newString)
+        addCell("Stat Name")
         //insert row
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: dataSourceArray.count-1, inSection: 0)], withRowAnimation: .Automatic)
@@ -81,13 +105,21 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             // handle delete (by removing the data from your array and updating the tableview)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext
+            managedContext.deleteObject(dataSourceArray[indexPath.row] as NSManagedObject)
             dataSourceArray.removeAtIndex(indexPath.row)
-            entryCounter--
+            do{
+                try managedContext.save()
+            }catch let error as NSError{
+                print("Could not save \(error), \(error.userInfo)")
+            }
             //delete row
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.endUpdates()
         }
+        self.tableView.reloadData()
     }
     //end of swipe to delete
     
@@ -106,6 +138,8 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             let textf = actionSheetController.textFields![0] as UITextField
             //print(textf.text)
             sender.setTitle(textf.text, forState: .Normal)
+            //update coredata
+            self.updateName(textf.text!, row: sender.tag)
         }
         actionSheetController.addAction(okAction)
         //Add a text field
@@ -132,6 +166,8 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             let textf = actionSheetController.textFields![0] as UITextField
             //print(textf.text)
             sender.setTitle(textf.text, forState: .Normal)
+            //update core data
+            self.updateNum(textf.text!, row: sender.tag)
         }
         actionSheetController.addAction(okAction)
         //Add a text field
@@ -143,6 +179,44 @@ class statTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         //Present the AlertController
         self.presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func addCell(name:String){
+        //add element to dataArray(used for cell count)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entityForName("StatAttributes", inManagedObjectContext: managedContext)
+        let counterAtts = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        counterAtts.setValue(name, forKey: "statName")
+        counterAtts.setValue("??", forKey: "statValue")
+        do{
+            try managedContext.save()
+            dataSourceArray.append(counterAtts)
+        }catch let error as NSError{
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+    
+    func updateName(name: String, row: Int){
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        do {
+            dataSourceArray[row].setValue(name, forKey: "statName")
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    func updateNum(numString: String, row: Int){
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        do {
+            dataSourceArray[row].setValue(numString, forKey: "statValue")
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
     }
     /*
     // MARK: - Navigation

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var charAvatar: UIImageView!
     @IBOutlet weak var avatarButton: UIButton!
@@ -39,8 +40,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var skillsTabImage: UIImageView!
     
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -55,6 +54,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         avatarButton.clipsToBounds = true
         statsSeperator.hidden = true
         changeIconImages("stats")
+        fetchCharacter()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         imageFromSource.allowsEditing = false
         
         //////////ask the user if they want to take a photo or choose from library
-        let actionSheetController: UIAlertController = UIAlertController(title: "Avatar Location", message: "Where do you want to get your avatar?", preferredStyle: .Alert)
+        let actionSheetController: UIAlertController = UIAlertController(title: "Avatar Location", message: "Where do you want to get your avatar?", preferredStyle: .ActionSheet)
         
         //Create and add the Photo action
         let photoAction: UIAlertAction = UIAlertAction(title: "Photo", style: .Default) { action -> Void in
@@ -81,6 +81,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                 self.presentViewController(imageFromSource, animated: true, completion: nil)
         }
         actionSheetController.addAction(photoAction)
+        let miniTapAction: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
+            (alertAction: UIAlertAction) in actionSheetController.dismissViewControllerAnimated(true, completion: nil)})
+        actionSheetController.addAction(miniTapAction)
         //Create and an option action
         let cameraRollAction: UIAlertAction = UIAlertAction(title: "Camera Roll", style: .Default) { action -> Void in
             //Do some other stuff
@@ -185,8 +188,61 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                 "baz"
         }
     }
-//helper functions
+    //helper functions
     
+    //data saving
+    func saveCharacter(){
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        let entity =  NSEntityDescription.entityForName("CharAttributes", inManagedObjectContext:managedContext)
+        
+        let charAttributes = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        
+        charAttributes.setValue("Char Name", forKey: "charName")
+        charAttributes.setValue("99", forKey: "charLevel")
+        charAttributes.setValue("99/100", forKey: "charEXP")
+        charAttributes.setValue("Warrior", forKey: "charClass")
+        
+        do{
+            try managedContext.save()
+        } catch{
+            fatalError("failure to save context: \(error)")
+        }
+        
+    }
+    
+    func fetchCharacter(){
+        //1
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "CharAttributes")
+        
+        //3
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            if (results.count > 0) {
+                let attributes = results[0] as! NSManagedObject
+                
+                print("1 - \(attributes)")
+                
+                if let charName = attributes.valueForKey("charName"), charClass = attributes.valueForKey("charClass") {
+                    print("\(charName) \(charClass)")
+                    nameLabel.text = "\(charName)"
+                }
+                print("look above this")
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    
+    }
    
     
 }

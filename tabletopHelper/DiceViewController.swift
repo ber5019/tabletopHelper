@@ -113,14 +113,15 @@ class DiceViewController: UIViewController {
         let okAction: UIAlertAction = UIAlertAction(title: "Okay", style: .Default) { action -> Void in
             //Do some other stuff
             let textf = actionSheetController.textFields![0] as UITextField
-            //print(textf.text)
-            dieSize = Int(textf.text!)
-            self.random1 = Int(arc4random_uniform(UInt32(dieSize)))
-            randNum = self.random1! + 1 // this is the dice roll
-            //print(randNum)
-            //print(random1)
-            self.rollText.text = "\(randNum)"
-            self.addToConcatText("\(randNum)")
+            if(!textf.text!.isEmpty){
+                print(textf.text)
+                dieSize = Int(textf.text!)
+                self.random1 = Int(arc4random_uniform(UInt32(dieSize)))
+                randNum = self.random1! + 1 // this is the dice roll
+                //print(randNum)
+                self.rollText.text = "\(randNum)"
+                self.addToConcatText("\(randNum)")
+            }
         }
         actionSheetController.addAction(okAction)
         //Add a text field

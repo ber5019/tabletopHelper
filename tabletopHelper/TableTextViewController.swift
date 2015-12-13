@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class TableTextViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
-    var newString = "item"
-    var entryCounter = 1
+    
     @IBOutlet weak var tableView: UITableView!
-    var dataSourceArray = ["item 1"]
+    var dataSourceArray = [NSManagedObject]()
     @IBOutlet weak var addList: UIButton!
     
     
@@ -23,6 +23,27 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         // Do any additional setup after loading the view.
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false;
+        //addCell("Name Me")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //1
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "CounterAttributes")
+        
+        //3
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            dataSourceArray = results as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +59,9 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     
     //define amount of rows here
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(dataSourceArray.count == 0){
+            addCell("Name Me")
+        }
         return dataSourceArray.count
     }
     
@@ -53,18 +77,24 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         
             cell.backgroundColor = UIColor.init(red: 186/255, green: 104/255, blue: 200/255, alpha: 1.0)
         }
+        let cellData = dataSourceArray[indexPath.row]
+        cell.namebutton.setTitle(cellData.valueForKey("counterName") as? String, forState: UIControlState.Normal)
+        cell.numButton.setTitle(cellData.valueForKey("counterNum") as? String, forState: UIControlState.Normal)
+        cell.nameok.tag = indexPath.row
+        cell.nameok.addTarget(self, action: "nameok:", forControlEvents: .TouchUpInside)
+        cell.numok.tag = indexPath.row
+        cell.numok.addTarget(self, action: "numok:", forControlEvents: .TouchUpInside)
         cell.plusbutton.tag = indexPath.row
-        cell.numButton.setTitle("20", forState: UIControlState.Normal)
+        cell.plusbutton.addTarget(self, action: "plusbutton:", forControlEvents: .TouchUpInside)
+        cell.minusbutton.tag = indexPath.row
+        cell.minusbutton.addTarget(self, action: "minusbutton:", forControlEvents: .TouchUpInside)
+        
         return cell
     }
     
     //add a cell to the table view
     @IBAction func tableEntriesUp(sender: AnyObject) {
-        //first add item to array
-        entryCounter++
-        newString = "item" + "\(entryCounter)"
-        dataSourceArray.append(newString)
-        //insert row
+        addCell("Name Me")
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: dataSourceArray.count-1, inSection: 0)], withRowAnimation: .Automatic)
         tableView.endUpdates()
@@ -74,19 +104,92 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
+    
     //delete row implementation
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             // handle delete (by removing the data from your array and updating the tableview)
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext
+            managedContext.deleteObject(dataSourceArray[indexPath.row] as NSManagedObject)
             dataSourceArray.removeAtIndex(indexPath.row)
-            entryCounter--
+            do{
+                try managedContext.save()
+            }catch let error as NSError{
+                print("Could not save \(error), \(error.userInfo)")
+            }
             //delete row
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.endUpdates()
         }
+        self.tableView.reloadData()
     }
     //end of swipe to delete
+    
+    func addCell(name:String){
+        //add element to dataArray(used for cell count)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entityForName("CounterAttributes", inManagedObjectContext: managedContext)
+        let counterAtts = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        counterAtts.setValue(name, forKey: "counterName")
+        counterAtts.setValue("20", forKey: "counterNum")
+        do{
+            try managedContext.save()
+            dataSourceArray.append(counterAtts)
+        }catch let error as NSError{
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+    
+    func nameok(sender: AnyObject) {
+        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MyTableViewCell
+        updateName(cell.namebutton.currentTitle!, row: sender.tag)
+        //FIXTHIS: http://stackoverflow.com/questions/32931731/ios-swift-update-uitableview-custom-cell-label-outside-of-tableview-cellforrow
+    }
+    
+    func numok(sender: AnyObject){
+        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MyTableViewCell
+        updateNum(cell.numButton.currentTitle!, row: sender.tag)
+    }
+    
+    func plusbutton(sender: AnyObject){
+        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MyTableViewCell
+        updateNum(cell.numButton.currentTitle!, row: sender.tag)
+    }
+    
+    func minusbutton(sender: AnyObject){
+        let indexPath = NSIndexPath(forRow: sender.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MyTableViewCell
+        updateNum(cell.numButton.currentTitle!, row: sender.tag)
+    }
+    
+    func updateName(name: String, row: Int){
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        do {
+            dataSourceArray[row].setValue(name, forKey: "counterName")
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    func updateNum(numString: String, row: Int){
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        do {
+            dataSourceArray[row].setValue(numString, forKey: "counterNum")
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
     
     /*
     // MARK: - Navigation

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
+    <entity name="CharAttributes" representedClassName=".CharAttributes" syncable="YES">
+        <attribute name="charAvatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="charClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="charEXP" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="charLevel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="charName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CounterAttributes" representedClassName=".CounterAttributes" syncable="YES">
+        <attribute name="counterName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="counterNum" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="InventoryAttributes" representedClassName=".InventoryAttributes" syncable="YES">
+        <attribute name="itemCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SkillAttributes" representedClassName=".SkillAttributes" syncable="YES">
+        <attribute name="skillName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="skillUses" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SpellAttributes" representedClassName=".SpellAttributes" syncable="YES">
+        <attribute name="spellName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spellUses" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="StatAttributes" representedClassName=".StatAttributes" syncable="YES">
+        <attribute name="statName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statValue" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CharAttributes" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="CounterAttributes" positionX="0" positionY="45" width="128" height="75"/>
+        <element name="InventoryAttributes" positionX="-63" positionY="9" width="128" height="75"/>
+        <element name="SkillAttributes" positionX="-18" positionY="36" width="128" height="75"/>
+        <element name="SpellAttributes" positionX="-36" positionY="27" width="128" height="75"/>
+        <element name="StatAttributes" positionX="-54" positionY="18" width="128" height="75"/>
+    </elements>
+</model>
