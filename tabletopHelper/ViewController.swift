@@ -22,22 +22,32 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var statsView: UIView!
     @IBOutlet weak var statsSeperator: UIView!
     @IBOutlet weak var skillSeperator: UIView!
+    //char top view text fields
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var classTextField: UITextField!
+    @IBOutlet weak var classLabel: UILabel!
     @IBOutlet weak var levelTextField: UITextField!
+    @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var expTextField: UITextField!
+    @IBOutlet weak var expLabel: UILabel!
+    //end char top view text fields
     @IBOutlet weak var levelloadtext: UILabel!
     @IBOutlet weak var statContainer: UIView!
     @IBOutlet weak var inventoryContainer: UIView!
     @IBOutlet weak var spellContainer: UIView!
     @IBOutlet weak var skillContainer: UIView!
     
+    @IBOutlet weak var editbutton: UIButton!
+    @IBOutlet weak var saveChangesButton: UIButton!
     //images for subtabs
     @IBOutlet weak var statsTabImage: UIImageView!
     @IBOutlet weak var inventoryTabImage: UIImageView!
     @IBOutlet weak var spellsTabImage: UIImageView!
     @IBOutlet weak var skillsTabImage: UIImageView!
+    
+    //core data
+    var charAtts = [NSManagedObject]()
     
     
     override func viewDidLoad() {
@@ -103,6 +113,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
 //        }
 //        
 //       self.presentViewController(imageFromSource, animated: true, completion: nil)
+        
     }
     
     
@@ -111,16 +122,60 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         
         charAvatar.image = temp
         self.dismissViewControllerAnimated(true, completion: {})
+        saveCharacter()
     }
     //camera stuff done!
     
-    @IBAction func nameButtonDown(sender: AnyObject) {
-        nameLabel.text = "found it!"
+    
+    //character editing handling
+    @IBAction func editCharacter(sender: AnyObject) {
+        classTextField.adjustsFontSizeToFitWidth = true
+        classTextField.text = classLabel.text
+        classTextField.enabled = true
+        classTextField.hidden = false
+        classLabel.hidden = true
+        levelTextField.text = levelLabel.text
+        levelTextField.enabled = true
+        levelTextField.hidden = false
+        levelLabel.hidden = true
+        expTextField.text = expLabel.text
+        expTextField.enabled = true
+        expTextField.hidden = false
+        expLabel.hidden = true
+        nameTextField.text = nameLabel.text
+        nameTextField.enabled = true
+        nameTextField.hidden = false
+        nameLabel.hidden = true
+        editbutton.enabled = false
+        editbutton.hidden = true
+        saveChangesButton.enabled = true
+        saveChangesButton.hidden = false
     }
     
-    
-    
-    
+    @IBAction func doneEditingCharacter(sender: AnyObject) {
+        classLabel.text = classTextField.text
+        classTextField.hidden = true
+        classTextField.enabled = false
+        classLabel.hidden = false
+        levelLabel.text = levelTextField.text
+        levelTextField.hidden = true
+        levelTextField.enabled = false
+        levelLabel.hidden = false
+        expLabel.text = expTextField.text
+        expTextField.hidden = true
+        expTextField.enabled = false
+        expLabel.hidden = false
+        nameLabel.text = nameTextField.text
+        nameTextField.hidden = true
+        nameTextField.enabled = false
+        nameLabel.hidden = false
+        self.resignFirstResponder()
+        saveCharacter()
+        editbutton.enabled = true
+        editbutton.hidden = false
+        saveChangesButton.enabled = false
+        saveChangesButton.hidden = true
+    }
     
     
     
@@ -193,21 +248,44 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     //data saving
     func saveCharacter(){
         
+        let charName = nameLabel.text! as String
+        let charLevel = levelLabel.text! as String
+        let charEXP = expLabel.text! as String
+        let charClass = classLabel.text! as String
+        //handle image processing
+        let img = charAvatar.image
+        let imgData = UIImageJPEGRepresentation(img!, 1)
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext
         
         let entity =  NSEntityDescription.entityForName("CharAttributes", inManagedObjectContext:managedContext)
         
-        let charAttributes = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        charAttributes.setValue("Char Name", forKey: "charName")
-        charAttributes.setValue("99", forKey: "charLevel")
-        charAttributes.setValue("99/100", forKey: "charEXP")
-        charAttributes.setValue("Warrior", forKey: "charClass")
+        let fetchRequest = NSFetchRequest(entityName: "CharAttributes")
         
         do{
-            try managedContext.save()
+            let results =
+            try managedContext.executeFetchRequest(fetchRequest)
+            if(results.count > 0){
+                let character = results[0]
+                character.setValue(imgData, forKey: "charAvatar")
+                character.setValue(charName, forKey: "charName")
+                character.setValue(charLevel, forKey: "charLevel")
+                character.setValue(charEXP, forKey: "charEXP")
+                character.setValue(charClass, forKey: "charClass")
+                try managedContext.save()
+            }else{
+                let character = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+
+                
+                character.setValue(imgData, forKey: "charAvatar")
+                character.setValue(charName, forKey: "charName")
+                character.setValue(charLevel, forKey: "charLevel")
+                character.setValue(charEXP, forKey: "charEXP")
+                character.setValue(charClass, forKey: "charClass")
+                try managedContext.save()
+            }
         } catch{
             fatalError("failure to save context: \(error)")
         }
@@ -216,7 +294,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     
     func fetchCharacter(){
         //1
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext
         
@@ -225,23 +304,22 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         
         //3
         do {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
-            if (results.count > 0) {
-                let attributes = results[0] as! NSManagedObject
-                
-                print("1 - \(attributes)")
-                
-                if let charName = attributes.valueForKey("charName"), charClass = attributes.valueForKey("charClass") {
-                    print("\(charName) \(charClass)")
-                    nameLabel.text = "\(charName)"
-                }
-                print("look above this")
+            let results =
+            try managedContext.executeFetchRequest(fetchRequest)
+            charAtts = results as! [NSManagedObject]
+            if(results.count > 0){
+                let character = results[0] as! NSManagedObject
+                nameLabel.text = character.valueForKey("charName") as? String
+                expLabel.text = character.valueForKey("charEXP") as? String
+                levelLabel.text = character.valueForKey("charLevel") as? String
+                classLabel.text = character.valueForKey("charClass") as? String
+                charAvatar.image = UIImage(data: (character.valueForKey("charAvatar") as! NSData))
             }
-            
+
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-    
+        //print("character fetched")
     }
    
     

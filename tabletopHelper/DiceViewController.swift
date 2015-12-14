@@ -114,7 +114,7 @@ class DiceViewController: UIViewController {
             //Do some other stuff
             let textf = actionSheetController.textFields![0] as UITextField
             if(!textf.text!.isEmpty){
-                print(textf.text)
+                //print(textf.text)
                 dieSize = Int(textf.text!)
                 self.random1 = Int(arc4random_uniform(UInt32(dieSize)))
                 randNum = self.random1! + 1 // this is the dice roll

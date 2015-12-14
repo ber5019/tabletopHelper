@@ -16,6 +16,7 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     var dataSourceArray = [NSManagedObject]()
     @IBOutlet weak var addList: UIButton!
+    @IBOutlet weak var navigationView: UIView!
     
     
     override func viewDidLoad() {
@@ -24,6 +25,8 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false;
         //addCell("Name Me")
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWasShown:", name: UIKeyboardDidShowNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -78,6 +81,13 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
             cell.backgroundColor = UIColor.init(red: 186/255, green: 104/255, blue: 200/255, alpha: 1.0)
         }
         let cellData = dataSourceArray[indexPath.row]
+        if(UIScreen.mainScreen().bounds.size.height <= 568){
+            let widthConstraint = NSLayoutConstraint(item: cell.namebutton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+            cell.namebutton.addConstraint(widthConstraint)
+            cell.namebutton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 14)
+            let widthTextConstraint = NSLayoutConstraint(item: cell.nameText, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+            cell.nameText.addConstraint(widthTextConstraint)
+        }
         cell.namebutton.setTitle(cellData.valueForKey("counterName") as? String, forState: UIControlState.Normal)
         cell.numButton.setTitle(cellData.valueForKey("counterNum") as? String, forState: UIControlState.Normal)
         cell.nameok.tag = indexPath.row
@@ -94,12 +104,15 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     
     //add a cell to the table view
     @IBAction func tableEntriesUp(sender: AnyObject) {
-        addCell("Name Me")
-        tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: dataSourceArray.count-1, inSection: 0)], withRowAnimation: .Automatic)
-        tableView.endUpdates()
+        //restricting the amount of cells that can be entered until I can solve the scrolling tableview issue
+        if(dataSourceArray.count < 5 && UIScreen.mainScreen().bounds.size.height <= 568 || dataSourceArray.count < 7 && UIScreen.mainScreen().bounds.size.height > 568){
+            addCell("Name Me")
+            tableView.beginUpdates()
+            tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: dataSourceArray.count-1, inSection: 0)], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
     }
-    
+
     //swipe to show delete
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
@@ -130,18 +143,20 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
     
     func addCell(name:String){
         //add element to dataArray(used for cell count)
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let entity = NSEntityDescription.entityForName("CounterAttributes", inManagedObjectContext: managedContext)
-        let counterAtts = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        counterAtts.setValue(name, forKey: "counterName")
-        counterAtts.setValue("20", forKey: "counterNum")
-        do{
-            try managedContext.save()
-            dataSourceArray.append(counterAtts)
-        }catch let error as NSError{
-            print("Could not save \(error), \(error.userInfo)")
-        }
+
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext
+            let entity = NSEntityDescription.entityForName("CounterAttributes", inManagedObjectContext: managedContext)
+            let counterAtts = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            counterAtts.setValue(name, forKey: "counterName")
+            counterAtts.setValue("20", forKey: "counterNum")
+            do{
+                try managedContext.save()
+                dataSourceArray.append(counterAtts)
+            }catch let error as NSError{
+                print("Could not save \(error), \(error.userInfo)")
+            }
+
     }
     
     func nameok(sender: AnyObject) {
@@ -191,6 +206,20 @@ class TableTextViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+//    func keyboardWasShown(notification: NSNotification){
+//        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
+//            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+//            let offset = contentInsets.bottom - 60.0
+//            let cgoffset = CGPoint(x: 0, y: offset)
+//            tableView.contentOffset = cgoffset
+//        }
+//    }
+//    
+//    func keyboardWillBeHidden(notification: NSNotification){
+//            let cgoffset = CGPoint(x: 0, y: 0)
+//            tableView.contentOffset = cgoffset
+//
+//    }
     /*
     // MARK: - Navigation
 
